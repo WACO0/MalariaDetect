@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado Análisis</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+    <header class="bg_animate">
+
+        <form class="formularioContainer" id="formulario" onsubmit="consultar(); return false;">
+            <label for="genero">Género:</label>
+            <select name="genero" id="genero">
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+            </select>
+            <br>
+            <label for="globulos">Cantidad de hemoglobina (g/dL):</label>
+            <input type="number" name="globulos" id="globulos" step="0.01" required>
+            <br>
+            <label for="globulosb">Cantidad de glóbulos blancos o leucocitos(μL):</label>
+            <input type="number" name="globulos blancos" id="globulosb" step="0.01" required>
+            <br>
+            <label for="plaquetas">Cantidad de plaquetas o PLT(μL):</label>
+            <input type="number" name="globulos blancos" id="plaquetas" step="0.01" required>
+            <br>
+            <input type="submit" value="Consultar">
+          </form>
+        
+          <!-- Aquí se coloca el código JavaScript -->
+          <script>
+            function consultar() {
+              var genero = document.getElementById("genero").value;
+              var globulos = parseFloat(document.getElementById("globulos").value);
+              var globulosb = parseFloat(document.getElementById("globulosb").value);
+              var plaquetas = parseFloat(document.getElementById("plaquetas").value);
+        
+              var nivelMin, nivelMax; 
+              if (genero === "hombre") {
+                nivelMin = 13.5;
+              } else {
+                nivelMin = 12;
+              }
+
+
+              var cantidadGlobuloB;
+              cantidadGlobuloB = 4500;
+
+              var cantidadPlaquetas;
+              cantidadPlaquetas = 150000;
+
+        
+              var resultado;
+              if (globulos <= nivelMin) {
+                resultado = "tienes una cantidad  baja de globulos rojos, no se identifica malaria, poero podrias tener otra enfermedad, visita a tu medico de confianza para confirmar";
+                if(globulosb < cantidadGlobuloB){
+                    resultado = "tienes una cantidad baja de globulos blancos y rojos, no se identifica malaria, poero podrias tener otra enfermedad, visita a tu medico de confianza para confirmar";
+                    if(plaquetas < cantidadPlaquetas){
+                        resultado = "tienes una cantidad baja de globulos rojos, blancos y de plaquetas, se identifica malaria, visita a tu medico de confianza para confirmar";
+                    }
+                }
+                
+              } else {
+                resultado = "Hemograma negativo para malaria, por favor dirijase al centro hospitalario para confirmar.";
+              }
+        
+              // Abrir una nueva ventana con el resultado
+              var nuevaVentana = window.open("", "Resultado", "width=600,height=400");
+              nuevaVentana.document.write('<html><head><title>Resultado Análisis</title><link rel="stylesheet" type="text/css" href="/static/style.css"></head><body><header class="bg_animate"><h1>'+ resultado +'</h1><section class="banner contenedor"><secrion class="banner_title"></secrion><!-- <div class="banner_img"><img src="laptop-support.png" alt=""></div> --></section><div class="burbujas"><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div></div></header></body></html>');
+              nuevaVentana.document.close();
+        
+              // Centrar la ventana emergente
+              var ventanaAncho = nuevaVentana.innerWidth || nuevaVentana.document.documentElement.clientWidth || nuevaVentana.screen.width;
+              var ventanaAlto = nuevaVentana.innerHeight || nuevaVentana.document.documentElement.clientHeight || nuevaVentana.screen.height;
+        
+              var paginaX = window.screenX || window.screenLeft || 800;
+              var paginaY = window.screenY || window.screenTop || 0;
+              var ventanaX = paginaX + ((window.innerWidth / 2) - (ventanaAncho / 2));
+              var ventanaY = paginaY + ((window.innerHeight / 2) - (ventanaAlto / 2));
+              nuevaVentana.moveTo(ventanaX, ventanaY);
+            }
+          </script>
+
+        <h1 class="h1F">Formulario para detectar la malaria</h1>
+
+        <section class="banner contenedor">
+            <secrion class="banner_title">
+            </secrion>
+            <!-- <div class="banner_img">
+                <img src="laptop-support.png" alt="">
+            </div> -->
+        </section>
+
+
+        <div class="burbujas">
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+        </div>
+    </header>
+
+
+
+</body>
+</html>

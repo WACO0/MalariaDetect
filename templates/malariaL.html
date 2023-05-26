@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predicción de células</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+
+    <header class="bg_animate">
+        <h1>Predicción de células</h1>
+        <div class="form-container">
+            <form id="image-form">
+                <input type="file" name="image" id="image-input">
+                <br>
+                <br>
+                <input type="submit" value="Predecir">
+            </form>
+        </div>
+        <section class="banner contenedor">
+            <secrion class="banner_title">
+            </secrion>
+            <!-- <div class="banner_img">
+                <img src="laptop-support.png" alt="">
+            </div> -->
+        </section>
+        
+
+        <div class="burbujas">
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+        </div>
+    </header>
+
+
+    
+      
+    <div id="prediction-result"></div>
+
+    <script>
+        document.getElementById('image-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Evita el envío del formulario por defecto
+
+            // Obtener la imagen seleccionada por el usuario
+            var imageInput = document.getElementById('image-input');
+            var imageFile = imageInput.files[0];
+
+            // Crear un objeto FormData para enviar la imagen al servidor
+            var formData = new FormData();
+            formData.append('image', imageFile);
+
+            // Realizar la solicitud POST al servidor Flask
+            fetch('{{ url_for("predict") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              var nuevaVentana = window.open("", "Resultado", "width=400,height=300");
+              //   nuevaVentana.document.write("<html><head><title>Resultado</title></head><body>");
+              nuevaVentana.document.write('<html><head><title>Resultado Análisis</title><link rel="stylesheet" type="text/css" href="/static/style.css"></head><body><header class="bg_animate"><h1>' + data['predicted_class'] + '</h1><section class="banner contenedor"><secrion class="banner_title"></secrion><!-- <div class="banner_img"><img src="laptop-support.png" alt=""></div> --></section><div class="burbujas"><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div><div class="burbuja"></div></div></header></body></html>');
+              nuevaVentana.document.close();
+                
+              // Centrar la ventana emergente
+              var ventanaAncho = nuevaVentana.innerWidth || nuevaVentana.document.documentElement.clientWidth || nuevaVentana.screen.width;
+              var ventanaAlto = nuevaVentana.innerHeight || nuevaVentana.document.documentElement.clientHeight || nuevaVentana.screen.height;
+        
+              var paginaX = window.screenX || window.screenLeft || 800;
+              var paginaY = window.screenY || window.screenTop || 0;
+              var ventanaX = paginaX + ((window.innerWidth / 2) - (ventanaAncho / 2));
+              var ventanaY = paginaY + ((window.innerHeight / 2) - (ventanaAlto / 2));
+              nuevaVentana.moveTo(ventanaX, ventanaY);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Malaria Detect</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+
+    <header class="bg_animate">
+
+
+        <form  action="{{ url_for('malariaL') }}">
+            <input type="submit" value="Consulta Microscopio" class="botonL">
+        </form>
+
+        <form  action="{{ url_for('malariaH') }}">
+            <input type="submit" value="Consulta Hemograma" class="botonH">
+        </form>
+
+        <h1 class="indexh1">Deteccion de la malaria por medio de tu hemograma o imagen de laboratorio</h1>
+        <h2 class="indexh2">Selecciona la consulta que desees realizar</h2>
+        <section class="banner contenedor">
+            <secrion class="banner_title">
+            </secrion>
+            <!-- <div class="banner_img">
+                <img src="laptop-support.png" alt="">
+            </div> -->
+        </section>
+
+
+        <div class="burbujas">
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+
+        </div>
+    </header>
+
+
+
+</body>
+</html>
